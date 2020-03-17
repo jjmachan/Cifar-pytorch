@@ -83,7 +83,7 @@ class CifarDownloadedDataset(Dataset):
             data_batches=self.test_batches
 
         for batch_file in data_batches:
-            cifar_data[batch_file] = unpickle_cifar(dataPath/batch_file)
+            cifar_data[batch_file] = unpickle_cifar(self.root_dir/batch_file)
 
         for batch in cifar_data:
             print('appending: ',batch)

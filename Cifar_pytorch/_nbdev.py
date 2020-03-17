@@ -6,9 +6,11 @@ index = {"unpickle_cifar": "01_dataloader.ipynb",
          "load_label_names": "01_dataloader.ipynb",
          "normalize": "01_dataloader.ipynb",
          "one_hot_encoding": "01_dataloader.ipynb",
-         "CifarDownloadedDataset": "01_dataloader.ipynb"}
+         "CifarDownloadedDataset": "01_dataloader.ipynb",
+         "eval_model_accuracy": "02_train.ipynb"}
 
-modules = ["dataloader.py"]
+modules = ["dataloader.py",
+           "train.py"]
 
 doc_url = "https://jjmachan.github.io/Cifar_pytorch/"
 

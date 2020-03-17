@@ -10,8 +10,8 @@ index = {"unpickle_cifar": "01_dataloader.ipynb",
 
 modules = ["dataloader.py"]
 
-doc_url = "https://jjmachan.github.io/Cifar-pytorch/"
+doc_url = "https://jjmachan.github.io/Cifar_pytorch/"
 
-git_url = "https://github.com/jjmachan/Cifar-pytorch/tree/master/"
+git_url = "https://github.com/jjmachan/Cifar_pytorch/tree/master/"
 
 def custom_doc_links(name): return None

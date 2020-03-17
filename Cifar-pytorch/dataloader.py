@@ -6,11 +6,14 @@ __all__ = ['unpickle_cifar', 'load_label_names', 'normalize', 'one_hot_encoding'
 
 import torch
 import torchvision
+import torchvision.transforms as transforms
+
 import os
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset
+from PIL import Image
 
 # Cell
 # py fun to load data
@@ -34,12 +37,13 @@ def normalize(x):
 
 # Cell
 
-def one_hot_encoding(labels):
-    encoded = np.zeros((len(labels), 10))
+class one_hot_encoding(object):
+    def __call__(self, sample):
+        encoded = np.zeros((len(labels), 10))
 
-    for idx,val in enumerate(labels):
-        encoded[idx][val] = 1
-    return encoded
+        for idx,val in enumerate(sample):
+            encoded[idx][val] = 1
+        return encoded
 
 
 
@@ -50,7 +54,7 @@ class CifarDownloadedDataset(Dataset):
     This is the Cifar10 dataset loader from the downloaded section.
     """
 
-    def __init__(self, root_dir, train=True, transform=None):
+    def __init__(self, root_dir, train=True, transform=None, target_transform=None):
         """
         Args:
             root_dir (string): Path of the cifar10 data_batches.
@@ -60,6 +64,7 @@ class CifarDownloadedDataset(Dataset):
 
         self.root_dir = Path(root_dir)
         self.transform = transform
+        self.target_transform = target_transform
         self.train_batches = ['data_batch_5',
                               'data_batch_4',
                               'data_batch_1',
@@ -87,14 +92,27 @@ class CifarDownloadedDataset(Dataset):
             label_batch = cifar_data[batch][b'labels']
             self.labels += label_batch
 
+        # convert self.data to the NHWC format
+        self.data = self.data.reshape(-1,3,32,32).transpose(0,2,3,1)
+
     def __len__(self):
         return self.data.shape[0]
 
-    def __getitem(self, idx):
+    def __getitem__(self, idx):
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        cifar_data = dict()
-        for batch_file in self.train_batches:
-            cifar_data[batch_file] = unpickle_cifar(dataPath/batch_file)
+        image, label = self.data[idx], self.labels[idx]
 
+        # to make the Dataloader consitant with all other
+        # pytorch dataloaders we return a PIL Image
+
+        image = Image.fromarray(image)
+
+        if self.transform is not None:
+            image = self.transform(image)
+
+        if self.target_transform is not None:
+            label = self.target_transform(label)
+
+        return image,label

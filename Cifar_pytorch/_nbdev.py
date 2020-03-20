@@ -7,10 +7,14 @@ index = {"unpickle_cifar": "01_dataloader.ipynb",
          "normalize": "01_dataloader.ipynb",
          "one_hot_encoding": "01_dataloader.ipynb",
          "CifarDownloadedDataset": "01_dataloader.ipynb",
-         "eval_model_accuracy": "02_train.ipynb"}
+         "eval_model_accuracy": "02_trainer.ipynb",
+         "train": "02_trainer.ipynb",
+         "TestNet": "03_models.ipynb",
+         "TestNet2": "03_models.ipynb"}
 
 modules = ["dataloader.py",
-           "train.py"]
+           "trainer.py",
+           "models.py"]
 
 doc_url = "https://jjmachan.github.io/Cifar_pytorch/"
 
